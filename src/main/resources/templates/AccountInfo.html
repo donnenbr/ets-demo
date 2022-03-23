@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" mlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Information</title>
+</head>
+<body>
+<p th:text="'Error : ' + ${errorMessage}"></p>
+<p th:text="'User ID : ' + ${data['userId']}"></p>
+<p th:text="'Balance : ' + ${data['balance']}"></p>
+<p th:text="'Last Transaction : ' + ${data['lastTransactionTimestamp']}"></p>
+<p th:text="'Last Transaction Amount : ' + ${data['lastTransactionAmount']}"></p>
+</body>
+</html>

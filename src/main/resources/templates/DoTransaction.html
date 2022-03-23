@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Transaction</title>
+</head>
+<body>
+<H1>Execute Transaction on Account</H1>
+<hr/>
+<p>User ID : <input type="text" id="userId" name="userId"/></p>
+<p>Amount : <input type="text" id="amount" name="amount"/></p>
+<p/>
+<button onclick="executeTransaction()">Execute</button>
+</body>
+<script>
+    function executeTransaction() {
+        let userId = document.getElementById("userId").value.trim();
+        let amount = document.getElementById("amount").value.trim();
+        if (userId === "" || amount === "") {
+            alert("You must enter userid and amount");
+            return;
+        }
+        data = { userId : userId, transactionAmount: amount };
+        sendData(data);
+    }
+
+    function sendData(data) {
+        let postData = JSON.stringify(data);
+        const url = "/executeTransaction"
+        let xhr = new XMLHttpRequest()
+
+        xhr.open('POST', url, true)
+        xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+        xhr.send(postData);
+
+        xhr.onload = function () {
+            console.log("*** status " + xhr.status);
+            console.log("*** resp " + xhr.responseText);
+            let retVal = JSON.parse(xhr.responseText);
+            if (retVal.error !== undefined) {
+                alert("Error - " + retVal.error);
+            }
+            else {
+                alert("Transaction successful - new balance is " + retVal.balance);
+            }
+        }
+    }
+</script>
+</html>
